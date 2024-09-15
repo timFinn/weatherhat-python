@@ -48,6 +48,7 @@ def host_avail(hostname):
         socket.gethostbyname(hostname)
         return True
     except socket.error:
+        print(socket.error)
         return False
 
 
