@@ -47,8 +47,8 @@ def host_avail(hostname):
     try:
         socket.gethostbyname(hostname)
         return True
-    except socket.error:
-        print(socket.error)
+    except Exception as exc:
+        print(exc)
         return False
 
 
@@ -59,7 +59,7 @@ def send_payload(topic, data):
         }
     )
     client.publish(topic=topic, payload=payload, qos=0, retain=False)
-    print(f"sending {payload} to server")
+#    print(f"sending {payload} to server")
 
 
 #   Main Loop
@@ -88,7 +88,6 @@ sleep(10.0)
 
 while True:
     if host_avail(mqtt_server):
-
         try:
             sensor.update(interval=2.0)
         except Exception as e:
@@ -119,7 +118,7 @@ while True:
             send_payload(wind_spd_topic, wind_speed)
             send_payload(rain_topic, rain)
             send_payload(rain_total_topic, rain_total)
-            print('Data sent to broker')
+#            print('Data sent to broker')
         except Exception as e:
             print(e)
 
