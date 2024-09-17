@@ -23,7 +23,7 @@ wind_spd_topic = "sensors/weather/wind_speed"
 rain_topic = "sensors/weather/rain"
 rain_total_topic = "sensors/weather/rain_total"
 
-mqtt_server = 'broker.local'  # Replace with the IP or URI of the MQTT server you use
+mqtt_server = "10.0.0.240"  # Replace with the IP or URI of the MQTT server you use
 client_id = "weatherhat"
 
 
@@ -45,9 +45,10 @@ def on_message(client, userdata, msg):
 
 def host_avail(hostname):
     try:
-        socket.gethostbyname(hostname)
+#        socket.gethostbyname(hostname)
+        socket.gethostbyaddr(hostname)
         return True
-    except Exception as exc:
+    except OSError as exc:
         print(exc)
         return False
 
@@ -65,7 +66,7 @@ def send_payload(topic, data):
 #   Main Loop
 
 while not host_avail(mqtt_server):
-    print("Waiting for dbserver")
+    print("Waiting for mqtt")
     sleep(2)
 
 # Create an instance of the client.
